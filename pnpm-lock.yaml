@@ -60,7 +60,11 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@24.13.3)(jsdom@26.1.0)
 
-  apps/dock-extension: {}
+  apps/dock-extension:
+    dependencies:
+      '@workbench/selector-engine':
+        specifier: workspace:*
+        version: link:../../packages/selector-engine
 
   packages/contracts:
     dependencies:
