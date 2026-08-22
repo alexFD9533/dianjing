@@ -1046,6 +1046,10 @@ try {
   );
 
   const refreshedFrameTitle = workspace.frameLocator('[data-page-frame]').locator('#title');
+  await refreshedFrameTitle.click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
   await workspace.locator('[data-action="toggle-guides"]').click();
   assert.equal(
     await workspace.locator('[data-action="toggle-guides"]').getAttribute('aria-pressed'),
