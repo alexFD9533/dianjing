@@ -436,7 +436,7 @@ try {
   assert.match(prompt, /点睛 AI 源码同步任务/);
   assert.match(prompt, /最终效果（按页面对象归并）/);
   assert.match(prompt, /ELEMENT-\d+ \|/);
-  assert.match(prompt, /文案：当前值/);
+  assert.match(prompt, /文案：当前状态/);
   assert.match(prompt, /#title/);
   assert.doesNotMatch(prompt, /源码应达到|操作摘要|页面模式：/);
   assert.match(prompt, /"原始标题"/);
