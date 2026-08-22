@@ -31,6 +31,7 @@ let directUrlRequest = '';
 let requestedOrigins = [];
 let resolvePendingOfflineExport;
 let workspaceStateRequests = 0;
+let resolveNextSelectionResponse;
 const requestWorkspaceCommand = (command) =>
   workspace.evaluate(
     (command) =>
@@ -109,7 +110,7 @@ try {
       return new Promise((resolve) => {
         resolvePendingOfflineExport = resolve;
       });
-    return source.evaluate(
+    const response = await source.evaluate(
       ({ command, sessionId }) =>
         new Promise((resolve) => {
           globalThis.__dockListeners[0](
@@ -120,6 +121,11 @@ try {
         }),
       { command: message.command, sessionId: message.sessionId },
     );
+    if (message.command?.action === 'select' && resolveNextSelectionResponse) {
+      resolveNextSelectionResponse(response);
+      resolveNextSelectionResponse = null;
+    }
+    return response;
   });
   await workspace.exposeFunction('__workspacePermissionRequest', async ({ origins }) => {
     requestedOrigins = origins;
@@ -1820,6 +1826,14 @@ try {
   }
 
   await dragGuideFromRuler('horizontal', 220, 260);
+  // Dropping a ruler guide on the canvas can also produce the canvas
+  // background click; restore the object selection before inspecting the
+  // layout panel.
+  await guideFollowerRow.click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
+  await workspace.locator('[data-task="layout"]').click();
   const horizontalGuideChoice = workspace
     .locator('[data-guide-manager] [data-guide-select]')
     .filter({ hasText: '水平参考线' })
@@ -1915,14 +1929,20 @@ try {
       { alignment: edge, position: guideHorizontalPx },
     );
   }
-  const horizontalGuideBeforeScroll = await horizontalGuide.boundingBox();
+  const horizontalGuideBeforeScroll = await workspace.evaluate((id) => {
+    const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
+    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+  }, horizontalGuideId);
   assert.ok(horizontalGuideBeforeScroll);
   await workspace
     .frameLocator('[data-page-frame]')
     .locator('html')
     .evaluate(() => window.scrollTo(0, 96));
   await workspace.waitForTimeout(50);
-  const horizontalGuideAfterScroll = await horizontalGuide.boundingBox();
+  const horizontalGuideAfterScroll = await workspace.evaluate((id) => {
+    const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
+    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+  }, horizontalGuideId);
   assert.ok(horizontalGuideAfterScroll);
   assert.ok(Math.abs(horizontalGuideAfterScroll.y - horizontalGuideBeforeScroll.y + 96) < 2);
   await workspace
@@ -1996,10 +2016,11 @@ try {
     stage.dispatchEvent(new Event('scroll'));
   });
   await workspace.waitForTimeout(20);
+  const guideCountBeforeToggle = await workspace.locator('[data-guide-id]').count();
   await workspace.locator('[data-action="toggle-guides"]').click();
   assert.equal(await workspace.locator('[data-guide-overlay-layer]').isHidden(), true);
   await workspace.locator('[data-action="toggle-guides"]').click();
-  assert.equal(await workspace.locator('[data-guide-id]').count(), 2);
+  assert.equal(await workspace.locator('[data-guide-id]').count(), guideCountBeforeToggle);
   await workspace.locator('[data-action="toggle-guides"]').click();
 
   await source.evaluate(() => {
@@ -2014,12 +2035,20 @@ try {
   await workspace.locator('[data-action="refresh"]').click();
   const focusRow = workspace.locator('.tree-row').filter({ hasText: '聚焦测试对象' }).first();
   await focusRow.waitFor();
+  const selectionResponse = new Promise((resolve) => {
+    resolveNextSelectionResponse = resolve;
+  });
   await focusRow.click();
+  await selectionResponse;
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
   await workspace.locator('[data-object-tree]').evaluate((tree) => (tree.scrollTop = 0));
   const historyCountBeforeTreeFocus = await source
     .locator('#dock-extension-host .history-count')
     .textContent();
   await workspace.locator('[data-action="focus-selection"]').click();
+  await workspace.waitForTimeout(50);
   const treeFocusGeometry = await workspace.evaluate(() => {
     const tree = document.querySelector('[data-object-tree]');
     const selected = document.querySelector('.tree-row.is-primary');
