@@ -1,0 +1,5 @@
+点睛（Dianjing）源代码以 Apache License 2.0 发布。
+
+third_party/clickdeck 是独立保留的 ClickDeck 上游参考快照，不属于点睛的构建输入。该目录使用其随附的 MIT License 和版权声明；如果未来分发其中的代码，应同时保留相应许可文件。
+
+项目名称、图标和品牌素材不因 Apache License 2.0 自动获得商标授权。

@@ -1,0 +1,4 @@
+packages:
+  - apps/dock-extension
+  - packages/contracts
+  - packages/selector-engine

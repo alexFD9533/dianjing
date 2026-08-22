@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-types/
+coverage/
+playwright-report/
+test-results/
+.cairn/
+.local/
+.spec/
+.ui-design/
+docs/design/
+apps/product-board/
+third_party/
+*.log

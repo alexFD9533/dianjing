@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src", "vite.config.ts"],
+  "references": [{ "path": "../../packages/selector-engine" }],
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist-types",
+    "baseUrl": ".",
+    "paths": { "@workbench/selector-engine": ["../../packages/selector-engine/src/index.ts"] }
+  }
+}

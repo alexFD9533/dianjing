@@ -1,0 +1,37 @@
+node_modules/
+dist/
+dist-types/
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+.pnpm-store/
+.cache/
+*.log
+.DS_Store
+
+# Local review and project-memory material
+.cairn/
+.local/
+.spec/
+.ui-design/
+apps/product-board/
+docs/design/
+
+# Legacy/private checkouts retained locally but excluded from the public baseline
+apps/extension/
+apps/demo-pages/
+docs/archive/
+third_party/
+packages/*
+!packages/contracts/
+!packages/contracts/**
+!packages/selector-engine/
+!packages/selector-engine/**
+
+# Root-level historical product notes remain outside the public baseline
+docs/*.md
+!docs/README.md
+
+# Project Cairn: git_policy=ignore
+cairn/

@@ -1,0 +1,13 @@
+{
+  "name": "@workbench/dock-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build --mode content && vite build --mode background && vite build --mode workspace && vite build --mode local-preview",
+    "dev": "vite build --watch --mode content"
+  },
+  "dependencies": {
+    "@workbench/selector-engine": "workspace:*"
+  }
+}
