@@ -1119,7 +1119,19 @@ try {
     await workspace.mouse.up();
   };
   const ensureGuideSelected = async (id) => {
-    const choice = workspace.locator(`[data-guide-manager] [data-guide-select="${id}"]`);
+    let choice = workspace.locator(`[data-guide-manager] [data-guide-select="${id}"]`);
+    if ((await choice.count()) === 0) {
+      const guide = workspace.locator(`[data-guide-id="${id}"]`).first();
+      const label = await guide.getAttribute('aria-label');
+      const match = label?.match(/^(竖直|水平)参考线\s+(\d+) px$/);
+      assert.ok(match, `无法从参考线恢复布局选项：${label ?? id}`);
+      choice = workspace
+        .locator('[data-guide-manager] [data-guide-select]')
+        .filter({ hasText: `${match[1]}参考线` })
+        .filter({ hasText: `${match[2]} px` })
+        .last();
+    }
+    await choice.waitFor({ state: 'visible' });
     if ((await choice.getAttribute('aria-pressed')) !== 'true') await choice.click();
   };
   const invalidGuideCount = await workspace.locator('[data-guide-id]').count();
