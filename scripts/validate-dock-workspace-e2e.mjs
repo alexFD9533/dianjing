@@ -1133,6 +1133,12 @@ try {
   await dragGuideFromRuler('vertical', 220, 120);
   await dragGuideFromRuler('horizontal', 220, 260);
   assert.equal(await workspace.locator('[data-guide-id]').count(), 2);
+  // Dropping a ruler guide on the canvas can also produce the canvas background
+  // click; restore the object selection before inspecting the layout panel.
+  await refreshedFrameTitle.click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
   await workspace.locator('[data-task="layout"]').click();
   assert.equal(await workspace.locator('[data-guide-manager] [data-guide-select]').count(), 2);
   assert.equal(
