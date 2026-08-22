@@ -1476,6 +1476,15 @@ try {
       horizontalWidth: horizontal.width,
     };
   });
+  const iframeZoom = await workspace.evaluate(() => {
+    const frame = document.querySelector('[data-page-frame]');
+    const widthInput = document.querySelector('[data-canvas-width]');
+    if (!(frame instanceof HTMLIFrameElement) || !(widthInput instanceof HTMLInputElement)) {
+      throw new Error('无法读取 iframe 缩放比例');
+    }
+    return frame.getBoundingClientRect().width / Math.max(widthInput.valueAsNumber, 1);
+  });
+  assert.ok(iframeZoom > 0);
   assert.ok(Math.abs(iframeGuideAfter.verticalTop - iframeGuideAfter.frameTop) < 2);
   assert.ok(Math.abs(iframeGuideAfter.verticalHeight - iframeGuideAfter.frameHeight) < 2);
   assert.ok(Math.abs(iframeGuideAfter.horizontalLeft - iframeGuideAfter.frameLeft) < 2);
@@ -1484,14 +1493,14 @@ try {
     Math.abs(
       iframeGuideAfter.verticalLeft -
         iframeGuideBeforeScroll.verticalLeft +
-        iframeScrollAfter.scrollX,
+        iframeScrollAfter.scrollX * iframeZoom,
     ) < 2,
   );
   assert.ok(
     Math.abs(
       iframeGuideAfter.horizontalTop -
         iframeGuideBeforeScroll.horizontalTop +
-        iframeScrollAfter.scrollY,
+        iframeScrollAfter.scrollY * iframeZoom,
     ) < 2,
   );
   await workspace
