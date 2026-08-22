@@ -3579,6 +3579,32 @@ stage.addEventListener('pointerup', (event) => {
   endCanvasPointer(event.pointerId, event.clientX, event.clientY);
 });
 stage.addEventListener('pointercancel', (event) => endCanvasPointer(event.pointerId));
+const hasActiveCanvasPointer = () =>
+  Boolean(
+    panStart ||
+    resizeStart ||
+    objectResizeStart ||
+    objectMoveStart ||
+    guideDragStart ||
+    rulerDragStart,
+  );
+// Pointer capture can be lost when a transformed canvas edge leaves the stage
+// under the pointer. Keep the active drag alive at the window level as a
+// fallback; stage events prevent these listeners from handling the same event twice.
+window.addEventListener('pointermove', (event) => {
+  if (event.defaultPrevented || !hasActiveCanvasPointer()) return;
+  event.preventDefault();
+  moveCanvasPointer(event.clientX, event.clientY);
+});
+window.addEventListener('pointerup', (event) => {
+  if (event.defaultPrevented || !hasActiveCanvasPointer()) return;
+  event.preventDefault();
+  endCanvasPointer(event.pointerId, event.clientX, event.clientY);
+});
+window.addEventListener('pointercancel', (event) => {
+  if (event.defaultPrevented || !hasActiveCanvasPointer()) return;
+  endCanvasPointer(event.pointerId);
+});
 stage.addEventListener('click', (event) => {
   if (canvasMode === 'pan' || spaceHeld || event.defaultPrevented) return;
   const canvasContent = app.querySelector<HTMLElement>('[data-canvas-content]');
