@@ -1938,7 +1938,13 @@ try {
     .frameLocator('[data-page-frame]')
     .locator('html')
     .evaluate(() => window.scrollTo(0, 96));
-  await workspace.waitForTimeout(50);
+  await workspace.waitForFunction(
+    ({ id, beforeY }) => {
+      const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
+      return Boolean(rect && Math.abs(rect.y - beforeY + 96) < 2);
+    },
+    { id: horizontalGuideId, beforeY: horizontalGuideBeforeScroll.y },
+  );
   const horizontalGuideAfterScroll = await workspace.evaluate((id) => {
     const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
     return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
