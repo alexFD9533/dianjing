@@ -1329,7 +1329,9 @@ const focusSelectedTreeRow = () => {
   const element = primaryElement();
   const tree = app.querySelector<HTMLElement>('[data-object-tree]');
   if (!element || !tree) return;
-  const row = tree.querySelector<HTMLElement>(`[data-object-id="${CSS.escape(element.id)}"]`);
+  const row = tree.querySelector<HTMLElement>(
+    `.tree-row[data-object-id="${CSS.escape(element.id)}"], .tree-search-result[data-object-id="${CSS.escape(element.id)}"]`,
+  );
   if (!row) return;
   const treeRect = tree.getBoundingClientRect();
   const rowRect = row.getBoundingClientRect();
