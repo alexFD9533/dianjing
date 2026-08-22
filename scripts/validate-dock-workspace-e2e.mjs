@@ -1707,7 +1707,7 @@ try {
   );
   await workspace.locator('[data-task="layout"]').click();
   await ensureGuideSelected(verticalGuideId);
-  assert.equal(await workspace.locator('[data-guide-manager-current]').count(), 1);
+  assert.equal(await workspace.locator('.guide-manager-current').count(), 1);
   assert.equal(await workspace.locator('[data-selection-anchor="true"]').count(), 0);
   assert.match(await workspace.locator('[data-alignment-anchor]').textContent(), /当前.*参考线/);
   assert.equal(await workspace.locator('[data-batch-align="top"]').isDisabled(), true);
