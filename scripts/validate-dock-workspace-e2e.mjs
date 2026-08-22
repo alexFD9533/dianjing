@@ -1203,10 +1203,14 @@ try {
     await workspace.locator('[data-guide-id]').first().getAttribute('aria-label'),
     guideBeforeDrag,
   );
-  await workspace.locator('[data-guide-manager] [data-guide-select]').first().click();
   assert.equal(
     await workspace.locator('[data-guide-select-none]').getAttribute('aria-pressed'),
     'false',
+  );
+  await workspace.locator('[data-guide-manager] [data-guide-select]').first().click();
+  assert.equal(
+    await workspace.locator('[data-guide-select-none]').getAttribute('aria-pressed'),
+    'true',
   );
   await workspace.locator('[data-guide-manager] [data-guide-delete]').click();
   assert.equal(
