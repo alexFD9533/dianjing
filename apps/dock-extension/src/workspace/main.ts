@@ -3106,7 +3106,12 @@ const beginResize = (event: PointerEvent, direction: 'right' | 'bottom' | 'corne
     direction,
     pointerId: event.pointerId,
   };
-  stage.setPointerCapture(event.pointerId);
+  try {
+    stage.setPointerCapture(event.pointerId);
+  } catch {
+    // Synthetic or older browser pointer events may not be capturable; the
+    // window-level fallback below still receives the active drag.
+  }
   stage.classList.add('is-resizing');
 };
 

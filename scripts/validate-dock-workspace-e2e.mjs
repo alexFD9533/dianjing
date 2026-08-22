@@ -413,38 +413,74 @@ try {
   await workspace.locator('[data-action="fit-canvas"]').click();
   const widthBeforeHandle = Number(await canvasWidth.inputValue());
   const rightHandle = workspace.locator('[data-canvas-resize="right"]');
-  await rightHandle.hover();
   const rightHandleBox = await rightHandle.boundingBox();
   assert.ok(rightHandleBox);
-  await workspace.mouse.move(
-    rightHandleBox.x + rightHandleBox.width / 2,
-    rightHandleBox.y + rightHandleBox.height / 2,
+  const rightHandleX = rightHandleBox.x + rightHandleBox.width / 2;
+  const rightHandleY = rightHandleBox.y + rightHandleBox.height / 2;
+  await rightHandle.dispatchEvent('pointerdown', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+    buttons: 1,
+    clientX: rightHandleX,
+    clientY: rightHandleY,
+    pointerId: 101,
+    pointerType: 'mouse',
+    isPrimary: true,
+  });
+  await workspace.evaluate(
+    ({ x, y }) => {
+      const init = {
+        bubbles: true,
+        cancelable: true,
+        buttons: 1,
+        clientX: x,
+        clientY: y,
+        pointerId: 101,
+        pointerType: 'mouse',
+        isPrimary: true,
+      };
+      window.dispatchEvent(new PointerEvent('pointermove', init));
+      window.dispatchEvent(new PointerEvent('pointerup', { ...init, buttons: 0 }));
+    },
+    { x: rightHandleX + 48, y: rightHandleY },
   );
-  await workspace.mouse.down();
-  await workspace.mouse.move(
-    rightHandleBox.x + rightHandleBox.width / 2 + 48,
-    rightHandleBox.y + rightHandleBox.height / 2,
-    { steps: 4 },
-  );
-  await workspace.mouse.up();
   assert.ok(Number(await canvasWidth.inputValue()) > widthBeforeHandle);
   await canvasWidth.fill(String(widthBeforeHandle));
   const heightBeforeHandle = Number(await canvasHeight.inputValue());
   const bottomHandle = workspace.locator('[data-canvas-resize="bottom"]');
-  await bottomHandle.hover();
   const bottomHandleBox = await bottomHandle.boundingBox();
   assert.ok(bottomHandleBox);
-  await workspace.mouse.move(
-    bottomHandleBox.x + bottomHandleBox.width / 2,
-    bottomHandleBox.y + bottomHandleBox.height / 2,
+  const bottomHandleX = bottomHandleBox.x + bottomHandleBox.width / 2;
+  const bottomHandleY = bottomHandleBox.y + bottomHandleBox.height / 2;
+  await bottomHandle.dispatchEvent('pointerdown', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+    buttons: 1,
+    clientX: bottomHandleX,
+    clientY: bottomHandleY,
+    pointerId: 102,
+    pointerType: 'mouse',
+    isPrimary: true,
+  });
+  await workspace.evaluate(
+    ({ x, y }) => {
+      const init = {
+        bubbles: true,
+        cancelable: true,
+        buttons: 1,
+        clientX: x,
+        clientY: y,
+        pointerId: 102,
+        pointerType: 'mouse',
+        isPrimary: true,
+      };
+      window.dispatchEvent(new PointerEvent('pointermove', init));
+      window.dispatchEvent(new PointerEvent('pointerup', { ...init, buttons: 0 }));
+    },
+    { x: bottomHandleX, y: bottomHandleY + 48 },
   );
-  await workspace.mouse.down();
-  await workspace.mouse.move(
-    bottomHandleBox.x + bottomHandleBox.width / 2,
-    bottomHandleBox.y + bottomHandleBox.height / 2 + 48,
-    { steps: 4 },
-  );
-  await workspace.mouse.up();
   assert.ok(Number(await canvasHeight.inputValue()) > heightBeforeHandle);
   await canvasHeight.fill(String(heightBeforeHandle));
 
@@ -612,7 +648,10 @@ try {
     await workspace.locator('select[data-draft-property="border-style"] option').count(),
     4,
   );
-  await workspace.screenshot({ path: path.join(artifactDir, 'workspace-appearance.png'), fullPage: false });
+  await workspace.screenshot({
+    path: path.join(artifactDir, 'workspace-appearance.png'),
+    fullPage: false,
+  });
   await workspace.locator('select[data-draft-property="border-style"]').selectOption('solid');
   await source.waitForFunction(
     () => document.querySelector('#title')?.style.borderStyle === 'solid',
@@ -622,7 +661,10 @@ try {
   assert.equal(await workspace.locator('.alignment-row button').count(), 6);
   assert.equal(await workspace.locator('.spacing-box--margin input').count(), 4);
   assert.equal(await workspace.locator('.spacing-box--padding input').count(), 4);
-  await workspace.screenshot({ path: path.join(artifactDir, 'workspace-spacing.png'), fullPage: false });
+  await workspace.screenshot({
+    path: path.join(artifactDir, 'workspace-spacing.png'),
+    fullPage: false,
+  });
   await workspace.locator('[data-style-property="text-align"][data-style-value="center"]').click();
   await source.waitForFunction(
     () => document.querySelector('#title')?.style.textAlign === 'center',
@@ -1451,7 +1493,10 @@ try {
     );
   });
   assert.equal(closedAfterToggleGeometry, true);
-  await workspace.screenshot({ path: path.join(artifactDir, 'workspace-merged.png'), fullPage: false });
+  await workspace.screenshot({
+    path: path.join(artifactDir, 'workspace-merged.png'),
+    fullPage: false,
+  });
 
   await workspace.locator('[data-action="show-history"]').click();
   assert.ok((await workspace.locator('.history-item').count()) >= 5);
