@@ -422,6 +422,7 @@ try {
   await workspace.mouse.move(
     rightHandleBox.x + rightHandleBox.width / 2 + 48,
     rightHandleBox.y + rightHandleBox.height / 2,
+    { steps: 4 },
   );
   await workspace.mouse.up();
   assert.ok(Number(await canvasWidth.inputValue()) > widthBeforeHandle);
@@ -438,6 +439,7 @@ try {
   await workspace.mouse.move(
     bottomHandleBox.x + bottomHandleBox.width / 2,
     bottomHandleBox.y + bottomHandleBox.height / 2 + 48,
+    { steps: 4 },
   );
   await workspace.mouse.up();
   assert.ok(Number(await canvasHeight.inputValue()) > heightBeforeHandle);
