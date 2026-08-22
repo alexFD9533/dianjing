@@ -2240,7 +2240,15 @@ try {
     document.body.append(legend);
   });
   await workspace.locator('[data-action="refresh"]').click();
-  await workspace.locator('.tree-row').filter({ hasText: '下井总人数' }).first().click();
+  const legendSearch = workspace.locator('[data-object-filter]');
+  await legendSearch.fill('下井总人数');
+  const legendSearchResult = workspace
+    .locator('.tree-search-result')
+    .filter({ hasText: '下井总人数' })
+    .first();
+  await legendSearchResult.waitFor();
+  await legendSearchResult.click();
+  await legendSearch.fill('');
   await workspace.locator('textarea[data-text-editor]').fill('下井总人数（人次）');
   await workspace.locator('textarea[data-text-editor]').press('Tab');
   await source.waitForFunction(() => {
