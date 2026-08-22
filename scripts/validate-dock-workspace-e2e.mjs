@@ -1590,13 +1590,16 @@ try {
     }
   });
   await workspace.locator('[data-action="refresh"]').click();
-  await workspace.locator('.tree-row').filter({ hasText: '分布对象甲' }).first().waitFor();
-  for (const label of ['分布对象甲', '分布对象乙', '分布对象丙'])
+  const distributionFilter = workspace.locator('[data-object-filter]');
+  for (const label of ['分布对象甲', '分布对象乙', '分布对象丙']) {
+    await distributionFilter.fill(label);
     await workspace
-      .locator('.tree-row')
+      .locator('.tree-search-result')
       .filter({ hasText: label })
       .first()
       .click({ modifiers: label === '分布对象甲' ? [] : ['Control'] });
+  }
+  await distributionFilter.fill('');
   await workspace.waitForFunction(
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 3 个对象',
   );
