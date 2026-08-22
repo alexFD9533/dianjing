@@ -774,11 +774,16 @@ try {
   await verticalPosition.fill('-12');
   await verticalPosition.press('Tab');
   await source.waitForFunction(() => document.querySelector('#title')?.style.top === '-12px');
+  // The edit tree intentionally narrows to the selected object's context.
+  // Search keeps this assertion stable when the target lives outside that context.
+  const objectFilter = workspace.locator('[data-object-filter]');
+  await objectFilter.fill('技术支持');
   await workspace
-    .locator('.tree-row')
+    .locator('.tree-search-result')
     .filter({ hasText: '技术支持' })
     .first()
     .click({ timeout: 2000 });
+  await objectFilter.fill('');
   await workspace.waitForTimeout(250);
   await workspace
     .locator('input[data-style-property="font-size"][data-range-control="number"]')
