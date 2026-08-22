@@ -1709,7 +1709,10 @@ try {
   await ensureGuideSelected(verticalGuideId);
   assert.equal(await workspace.locator('.guide-manager-current').count(), 1);
   assert.equal(await workspace.locator('[data-selection-anchor="true"]').count(), 0);
-  assert.match(await workspace.locator('[data-alignment-anchor]').textContent(), /当前.*参考线/);
+  assert.match(
+    await workspace.locator('[data-alignment-anchor].guide-anchor-note').textContent(),
+    /当前.*参考线/,
+  );
   assert.equal(await workspace.locator('[data-batch-align="top"]').isDisabled(), true);
   assert.equal(await workspace.locator('[data-batch-align="left"]').isDisabled(), false);
   const singleGuideFollowerBefore = await source.locator('#guide-follower').evaluate((element) => {
