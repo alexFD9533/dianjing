@@ -1665,7 +1665,7 @@ try {
   );
   assert.equal(
     await workspace.locator('.tree-row.is-primary strong').textContent(),
-    'Guide Follower',
+    '文本 · Guide Follower',
   );
   const anchorBeforeNoGuide = await source.locator('#guide-anchor').evaluate((element) => {
     const rect = element.getBoundingClientRect();
