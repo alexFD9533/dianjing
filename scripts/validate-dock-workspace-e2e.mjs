@@ -1107,12 +1107,41 @@ try {
     const rulerBox = await workspace
       .locator(`[data-ruler="${orientation === 'vertical' ? 'top' : 'left'}"]`)
       .boundingBox();
-    assert.ok(pageBox && rulerBox);
+    const viewportBox = await workspace.locator('[data-canvas-viewport]').boundingBox();
+    assert.ok(pageBox && rulerBox && viewportBox);
+    const clampToVisiblePage = (value, start, size, viewportStart, viewportSize) => {
+      const lower = Math.max(start, viewportStart + 2);
+      const upper = Math.min(start + size, viewportStart + viewportSize - 2);
+      assert.ok(lower <= upper);
+      return Math.min(Math.max(value, lower), upper);
+    };
+    const clampToViewport = (value, start, size) =>
+      Math.min(Math.max(value, start + 2), start + size - 2);
+    const dropX = clampToVisiblePage(
+      pageBox.x + offsetX,
+      pageBox.x,
+      pageBox.width,
+      viewportBox.x,
+      viewportBox.width,
+    );
+    const dropY = clampToVisiblePage(
+      pageBox.y + offsetY,
+      pageBox.y,
+      pageBox.height,
+      viewportBox.y,
+      viewportBox.height,
+    );
     const start =
       orientation === 'vertical'
-        ? { x: Math.max(rulerBox.x + 36, pageBox.x + offsetX), y: rulerBox.y + rulerBox.height / 2 }
-        : { x: rulerBox.x + rulerBox.width / 2, y: Math.max(rulerBox.y + 36, pageBox.y + offsetY) };
-    const drop = { x: pageBox.x + offsetX, y: pageBox.y + offsetY };
+        ? {
+            x: dropX,
+            y: clampToViewport(rulerBox.y + rulerBox.height / 2, viewportBox.y, viewportBox.height),
+          }
+        : {
+            x: clampToViewport(rulerBox.x + rulerBox.width / 2, viewportBox.x, viewportBox.width),
+            y: dropY,
+          };
+    const drop = { x: dropX, y: dropY };
     await workspace.mouse.move(start.x, start.y);
     await workspace.mouse.down();
     await workspace.mouse.move(drop.x, drop.y);
