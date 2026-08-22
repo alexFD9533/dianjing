@@ -1177,6 +1177,10 @@ try {
   await workspace.locator('[data-guide-manager] [data-guide-delete]').click();
   assert.equal(await workspace.locator('[data-guide-id].is-current').count(), 0);
   await dragGuideFromRuler('horizontal', 220, 260);
+  await refreshedFrameTitle.click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
   assert.equal(
     await workspace.locator('[data-guide-select-none]').getAttribute('aria-pressed'),
     'true',
