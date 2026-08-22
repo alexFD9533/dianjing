@@ -410,6 +410,7 @@ try {
     await source.locator('#dock-extension-host .history-count').textContent(),
     historyCountBeforeFocus,
   );
+  await workspace.locator('[data-action="fit-canvas"]').click();
   const widthBeforeHandle = Number(await canvasWidth.inputValue());
   const rightHandle = workspace.locator('[data-canvas-resize="right"]');
   const rightHandleBox = await rightHandle.boundingBox();
