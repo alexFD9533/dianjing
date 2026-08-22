@@ -413,6 +413,7 @@ try {
   await workspace.locator('[data-action="fit-canvas"]').click();
   const widthBeforeHandle = Number(await canvasWidth.inputValue());
   const rightHandle = workspace.locator('[data-canvas-resize="right"]');
+  await rightHandle.hover();
   const rightHandleBox = await rightHandle.boundingBox();
   assert.ok(rightHandleBox);
   await workspace.mouse.move(
@@ -430,6 +431,7 @@ try {
   await canvasWidth.fill(String(widthBeforeHandle));
   const heightBeforeHandle = Number(await canvasHeight.inputValue());
   const bottomHandle = workspace.locator('[data-canvas-resize="bottom"]');
+  await bottomHandle.hover();
   const bottomHandleBox = await bottomHandle.boundingBox();
   assert.ok(bottomHandleBox);
   await workspace.mouse.move(
