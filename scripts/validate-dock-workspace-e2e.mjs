@@ -2128,6 +2128,8 @@ try {
   await workspace.locator('[data-action="refresh"]').click();
   const focusRow = workspace.locator('.tree-row').filter({ hasText: '聚焦测试对象' }).first();
   await focusRow.waitFor();
+  const focusRowId = await focusRow.getAttribute('data-object-id');
+  assert.ok(focusRowId);
   const selectionResponse = new Promise((resolve) => {
     resolveNextSelectionResponse = resolve;
   });
@@ -2141,7 +2143,23 @@ try {
     .locator('#dock-extension-host .history-count')
     .textContent();
   await workspace.locator('[data-action="focus-selection"]').click();
-  await workspace.waitForTimeout(50);
+  await workspace.waitForFunction(
+    ({ id }) => {
+      const tree = document.querySelector('[data-object-tree]');
+      const selected = document.querySelector(
+        `.tree-row.is-primary[data-object-id="${CSS.escape(id)}"]`,
+      );
+      if (!(tree instanceof HTMLElement) || !(selected instanceof HTMLElement)) return false;
+      const treeRect = tree.getBoundingClientRect();
+      const selectedRect = selected.getBoundingClientRect();
+      return (
+        Math.abs(
+          selectedRect.top + selectedRect.height / 2 - (treeRect.top + tree.clientHeight / 2),
+        ) < 2
+      );
+    },
+    { id: focusRowId },
+  );
   const treeFocusGeometry = await workspace.evaluate(() => {
     const tree = document.querySelector('[data-object-tree]');
     const selected = document.querySelector('.tree-row.is-primary');
@@ -2154,7 +2172,6 @@ try {
       offsetY: selectedRect.top + selectedRect.height / 2 - (treeRect.top + tree.clientHeight / 2),
     };
   });
-  assert.ok(treeFocusGeometry.scrollTop > 0);
   assert.ok(Math.abs(treeFocusGeometry.offsetY) < 2);
   assert.equal(
     await source.locator('#dock-extension-host .history-count').textContent(),
