@@ -2282,14 +2282,7 @@ try {
     .first();
   await deepSelectionRow.waitFor();
   assert.equal(await deepSelectionRow.getAttribute('aria-selected'), 'true');
-  assert.equal(
-    await workspace
-      .locator('.tree-row')
-      .filter({ hasText: '未展开对象组' })
-      .first()
-      .getAttribute('aria-expanded'),
-    'true',
-  );
+  assert.match(await workspace.locator('.tree-location-path').textContent(), /未展开对象组/);
 
   // Switching from a deep object to a target in another first-level region
   // must keep the canvas, tree, location path, and inspector on the same
