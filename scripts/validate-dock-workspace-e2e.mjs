@@ -1118,8 +1118,8 @@ try {
     await workspace.mouse.move(drop.x, drop.y);
     await workspace.mouse.up();
   };
-  const ensureLastGuideSelected = async () => {
-    const choice = workspace.locator('[data-guide-manager] [data-guide-select]').last();
+  const ensureGuideSelected = async (id) => {
+    const choice = workspace.locator(`[data-guide-manager] [data-guide-select="${id}"]`);
     if ((await choice.getAttribute('aria-pressed')) !== 'true') await choice.click();
   };
   const invalidGuideCount = await workspace.locator('[data-guide-id]').count();
@@ -1695,6 +1695,8 @@ try {
   await workspace.locator('[data-guide-manager] [data-guide-delete]').click();
   await dragGuideFromRuler('vertical', 220, 120);
   const verticalGuide = workspace.locator('[data-guide-id][aria-label^="竖直"]').last();
+  const verticalGuideId = await verticalGuide.getAttribute('data-guide-id');
+  assert.ok(verticalGuideId);
   const guideVerticalPx = Number(
     (await verticalGuide.getAttribute('aria-label')).match(/(\d+) px/)?.[1],
   );
@@ -1704,7 +1706,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await ensureLastGuideSelected();
+  await ensureGuideSelected(verticalGuideId);
   assert.equal(await workspace.locator('[data-guide-manager-current]').count(), 1);
   assert.equal(await workspace.locator('[data-selection-anchor="true"]').count(), 0);
   assert.match(await workspace.locator('[data-alignment-anchor]').textContent(), /当前.*参考线/);
@@ -1734,7 +1736,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 2 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await ensureLastGuideSelected();
+  await ensureGuideSelected(verticalGuideId);
   for (const [alignment, edge] of [
     ['left', 'left'],
     ['center', 'center'],
@@ -1763,11 +1765,13 @@ try {
 
   await dragGuideFromRuler('horizontal', 220, 260);
   const horizontalGuide = workspace.locator('[data-guide-id][aria-label^="水平"]').last();
+  const horizontalGuideId = await horizontalGuide.getAttribute('data-guide-id');
+  assert.ok(horizontalGuideId);
   const guideHorizontalPx = Number(
     (await horizontalGuide.getAttribute('aria-label')).match(/(\d+) px/)?.[1],
   );
   assert.ok(Number.isInteger(guideHorizontalPx));
-  await ensureLastGuideSelected();
+  await ensureGuideSelected(horizontalGuideId);
   assert.equal(await workspace.locator('[data-batch-align="left"]').isDisabled(), true);
   // A horizontal guide also accepts a single object. Selecting the object
   // clears the anchor, so choose the guide again explicitly in the layout tab.
@@ -1776,7 +1780,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await ensureLastGuideSelected();
+  await ensureGuideSelected(horizontalGuideId);
   assert.equal(await workspace.locator('[data-batch-align="top"]').isDisabled(), false);
   await workspace.locator('[data-batch-align="top"]').click();
   await source.waitForFunction(
@@ -1792,7 +1796,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 2 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await ensureLastGuideSelected();
+  await ensureGuideSelected(horizontalGuideId);
   const commandTargets = await workspace.evaluate(() =>
     [...document.querySelectorAll('.tree-row.is-selected')]
       .map((row) => row.getAttribute('data-object-id'))
