@@ -1457,7 +1457,9 @@ const placeSelectedMany = (
   state.future = [];
   selected = ordered.at(-1)!;
   selectedTextFragment = null;
-  workspaceSelectedTargets = targets;
+  workspaceSelectedTargets = targets.filter(
+    (target): target is WorkspaceTargetRef => target !== null,
+  );
   state.notice = `已移动 ${ordered.length} 个对象，可撤销或在修改记录中取消`;
   render();
 };
