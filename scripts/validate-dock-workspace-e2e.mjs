@@ -162,7 +162,7 @@ try {
 
   await workspace.locator('[data-object-count]').waitFor({ state: 'visible' });
   await workspace.waitForFunction(() =>
-    document.querySelector('[data-object-count]')?.textContent?.includes('个可编辑对象'),
+    document.querySelector('[data-object-count]')?.textContent?.includes('个可选对象'),
   );
   assert.equal(await workspace.locator('[data-page-title]').textContent(), '真实产品页面');
   assert.match(
