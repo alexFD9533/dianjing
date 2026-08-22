@@ -1929,9 +1929,57 @@ try {
       { alignment: edge, position: guideHorizontalPx },
     );
   }
+  const resetIframeScroll = async () => {
+    await workspace
+      .frameLocator('[data-page-frame]')
+      .locator('html')
+      .evaluate(() => window.scrollTo(0, 0));
+    await workspace.waitForFunction(
+      ({ id, position }) => {
+        const frame = document.querySelector('[data-page-frame]');
+        const line = document.querySelector(`[data-guide-id="${id}"]`);
+        const widthInput = document.querySelector('[data-canvas-width]');
+        if (
+          !(frame instanceof HTMLIFrameElement) ||
+          !line ||
+          !(widthInput instanceof HTMLInputElement)
+        ) {
+          return false;
+        }
+        const frameRect = frame.getBoundingClientRect();
+        const zoom = frameRect.width / Math.max(widthInput.valueAsNumber, 1);
+        const scrollY = frame.contentWindow?.scrollY ?? Number.NaN;
+        return (
+          Number.isFinite(scrollY) &&
+          Math.abs(scrollY) < 0.5 &&
+          Math.abs(line.getBoundingClientRect().top - (frameRect.top + position * zoom)) < 2
+        );
+      },
+      { id: horizontalGuideId, position: guideHorizontalPx },
+    );
+  };
+  await resetIframeScroll();
   const horizontalGuideBeforeScroll = await workspace.evaluate((id) => {
+    const frame = document.querySelector('[data-page-frame]');
     const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
-    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+    const widthInput = document.querySelector('[data-canvas-width]');
+    if (
+      !(frame instanceof HTMLIFrameElement) ||
+      !rect ||
+      !(widthInput instanceof HTMLInputElement)
+    ) {
+      return null;
+    }
+    const frameRect = frame.getBoundingClientRect();
+    return {
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+      frameTop: frameRect.top,
+      zoom: frameRect.width / Math.max(widthInput.valueAsNumber, 1),
+      scrollY: frame.contentWindow?.scrollY ?? 0,
+    };
   }, horizontalGuideId);
   assert.ok(horizontalGuideBeforeScroll);
   await workspace
@@ -1939,22 +1987,61 @@ try {
     .locator('html')
     .evaluate(() => window.scrollTo(0, 96));
   await workspace.waitForFunction(
-    ({ id, beforeY }) => {
+    ({ id, position }) => {
+      const frame = document.querySelector('[data-page-frame]');
       const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
-      return Boolean(rect && Math.abs(rect.y - beforeY + 96) < 2);
+      const widthInput = document.querySelector('[data-canvas-width]');
+      if (
+        !(frame instanceof HTMLIFrameElement) ||
+        !rect ||
+        !(widthInput instanceof HTMLInputElement)
+      ) {
+        return false;
+      }
+      const frameRect = frame.getBoundingClientRect();
+      const zoom = frameRect.width / Math.max(widthInput.valueAsNumber, 1);
+      const scrollY = frame.contentWindow?.scrollY ?? Number.NaN;
+      return (
+        Number.isFinite(scrollY) &&
+        scrollY > 0 &&
+        Math.abs(rect.y - (frameRect.top + (position - scrollY) * zoom)) < 2
+      );
     },
-    { id: horizontalGuideId, beforeY: horizontalGuideBeforeScroll.y },
+    { id: horizontalGuideId, position: guideHorizontalPx },
   );
   const horizontalGuideAfterScroll = await workspace.evaluate((id) => {
+    const frame = document.querySelector('[data-page-frame]');
     const rect = document.querySelector(`[data-guide-id="${id}"]`)?.getBoundingClientRect();
-    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+    const widthInput = document.querySelector('[data-canvas-width]');
+    if (
+      !(frame instanceof HTMLIFrameElement) ||
+      !rect ||
+      !(widthInput instanceof HTMLInputElement)
+    ) {
+      return null;
+    }
+    const frameRect = frame.getBoundingClientRect();
+    return {
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+      frameTop: frameRect.top,
+      zoom: frameRect.width / Math.max(widthInput.valueAsNumber, 1),
+      scrollY: frame.contentWindow?.scrollY ?? 0,
+    };
   }, horizontalGuideId);
   assert.ok(horizontalGuideAfterScroll);
-  assert.ok(Math.abs(horizontalGuideAfterScroll.y - horizontalGuideBeforeScroll.y + 96) < 2);
-  await workspace
-    .frameLocator('[data-page-frame]')
-    .locator('html')
-    .evaluate(() => window.scrollTo(0, 0));
+  assert.ok(horizontalGuideAfterScroll.scrollY > 0);
+  assert.ok(
+    Math.abs(
+      horizontalGuideAfterScroll.y -
+        (horizontalGuideAfterScroll.frameTop +
+          (guideHorizontalPx - horizontalGuideAfterScroll.scrollY) *
+            horizontalGuideAfterScroll.zoom),
+    ) < 2,
+  );
+  await resetIframeScroll();
   const stageScrollBefore = await workspace.evaluate(() => {
     const frame = document.querySelector('[data-page-frame]')?.getBoundingClientRect();
     const line = document
