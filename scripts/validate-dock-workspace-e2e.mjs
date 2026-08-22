@@ -1779,9 +1779,15 @@ try {
   }
 
   await dragGuideFromRuler('horizontal', 220, 260);
-  const horizontalGuide = workspace.locator('[data-guide-id][aria-label^="水平"]').last();
-  const horizontalGuideId = await horizontalGuide.getAttribute('data-guide-id');
+  const horizontalGuideChoice = workspace
+    .locator('[data-guide-manager] [data-guide-select]')
+    .filter({ hasText: '水平参考线' })
+    .last();
+  await horizontalGuideChoice.waitFor({ state: 'visible' });
+  const horizontalGuideId = await horizontalGuideChoice.getAttribute('data-guide-select');
   assert.ok(horizontalGuideId);
+  const horizontalGuide = workspace.locator(`[data-guide-id="${horizontalGuideId}"]`).first();
+  await horizontalGuide.waitFor({ state: 'visible' });
   const guideHorizontalPx = Number(
     (await horizontalGuide.getAttribute('aria-label')).match(/(\d+) px/)?.[1],
   );
