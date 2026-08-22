@@ -1581,14 +1581,12 @@ try {
       ['distribution-b', '分布对象乙', 96],
       ['distribution-c', '分布对象丙', 412],
     ]) {
-      const container = document.createElement('section');
       const element = document.createElement('span');
       element.id = id;
       element.textContent = label;
       element.style.position = 'relative';
       element.style.left = `${left}px`;
-      container.append(element);
-      document.body.append(container);
+      document.body.append(element);
     }
   });
   await workspace.locator('[data-action="refresh"]').click();
