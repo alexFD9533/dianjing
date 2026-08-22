@@ -2338,6 +2338,10 @@ try {
     await frame.locator('#rapid-final-selection').getAttribute('data-dianjing-selected'),
     'true',
   );
+  await workspace.locator('[data-action="clear-selection"]').click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '未选择对象',
+  );
 
   await source.evaluate(() => {
     const metric = document.createElement('span');
