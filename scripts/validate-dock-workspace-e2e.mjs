@@ -1118,6 +1118,10 @@ try {
     await workspace.mouse.move(drop.x, drop.y);
     await workspace.mouse.up();
   };
+  const ensureLastGuideSelected = async () => {
+    const choice = workspace.locator('[data-guide-manager] [data-guide-select]').last();
+    if ((await choice.getAttribute('aria-pressed')) !== 'true') await choice.click();
+  };
   const invalidGuideCount = await workspace.locator('[data-guide-id]').count();
   const invalidPageBox = await workspace.locator('[data-page-frame]').boundingBox();
   const invalidRulerBox = await workspace.locator('[data-ruler="top"]').boundingBox();
@@ -1700,7 +1704,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await workspace.locator('[data-guide-manager] [data-guide-select]').last().click();
+  await ensureLastGuideSelected();
   assert.equal(await workspace.locator('[data-guide-manager-current]').count(), 1);
   assert.equal(await workspace.locator('[data-selection-anchor="true"]').count(), 0);
   assert.match(await workspace.locator('[data-alignment-anchor]').textContent(), /当前.*参考线/);
@@ -1730,7 +1734,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 2 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await workspace.locator('[data-guide-manager] [data-guide-select]').last().click();
+  await ensureLastGuideSelected();
   for (const [alignment, edge] of [
     ['left', 'left'],
     ['center', 'center'],
@@ -1763,7 +1767,7 @@ try {
     (await horizontalGuide.getAttribute('aria-label')).match(/(\d+) px/)?.[1],
   );
   assert.ok(Number.isInteger(guideHorizontalPx));
-  await workspace.locator('[data-guide-manager] [data-guide-select]').last().click();
+  await ensureLastGuideSelected();
   assert.equal(await workspace.locator('[data-batch-align="left"]').isDisabled(), true);
   // A horizontal guide also accepts a single object. Selecting the object
   // clears the anchor, so choose the guide again explicitly in the layout tab.
@@ -1772,7 +1776,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await workspace.locator('[data-guide-manager] [data-guide-select]').last().click();
+  await ensureLastGuideSelected();
   assert.equal(await workspace.locator('[data-batch-align="top"]').isDisabled(), false);
   await workspace.locator('[data-batch-align="top"]').click();
   await source.waitForFunction(
@@ -1788,7 +1792,7 @@ try {
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 2 个对象',
   );
   await workspace.locator('[data-task="layout"]').click();
-  await workspace.locator('[data-guide-manager] [data-guide-select]').last().click();
+  await ensureLastGuideSelected();
   const commandTargets = await workspace.evaluate(() =>
     [...document.querySelectorAll('.tree-row.is-selected')]
       .map((row) => row.getAttribute('data-object-id'))
