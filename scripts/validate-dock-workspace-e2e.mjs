@@ -956,7 +956,9 @@ try {
   );
   assert.equal(await source.locator('[data-dianjing-group="true"]').count(), 1);
 
-  await workspace.locator('.tree-row').filter({ hasText: '主内容区' }).first().click();
+  await objectFilter.fill('主内容区');
+  await workspace.locator('.tree-search-result').filter({ hasText: '主内容区' }).first().click();
+  await objectFilter.fill('');
   await workspace.waitForFunction(
     () => document.querySelector('.tree-row.is-primary strong')?.textContent === '主内容区',
   );
