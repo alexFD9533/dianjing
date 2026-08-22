@@ -1129,6 +1129,7 @@ try {
   await dragGuideFromRuler('vertical', 220, 120);
   await dragGuideFromRuler('horizontal', 220, 260);
   assert.equal(await workspace.locator('[data-guide-id]').count(), 2);
+  await workspace.locator('[data-task="layout"]').click();
   assert.equal(await workspace.locator('[data-guide-manager] [data-guide-select]').count(), 2);
   assert.equal(
     await workspace.locator('[data-guide-select-none]').getAttribute('aria-pressed'),
