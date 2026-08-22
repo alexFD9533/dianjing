@@ -1660,7 +1660,7 @@ try {
   );
   assert.equal(await workspace.locator('[data-selection-anchor="true"]').count(), 1);
   assert.match(
-    await workspace.locator('[data-alignment-anchor]').textContent(),
+    await workspace.locator('[data-alignment-anchor]:not(.guide-anchor-note)').textContent(),
     /首选对象.*Guide Anchor/,
   );
   assert.equal(
