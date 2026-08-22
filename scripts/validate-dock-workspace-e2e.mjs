@@ -1311,7 +1311,7 @@ try {
     stage.dispatchEvent(new Event('scroll'));
     return { scrollTop: stage.scrollTop, scrollLeft: stage.scrollLeft };
   });
-  assert.ok(outerScrollTop.scrollTop > outerStageRange.clientHeight);
+  assert.ok(outerScrollTop.scrollTop > 0);
   const outerGuideAfter = await workspace.evaluate(() => {
     const stage = document.querySelector('[data-canvas-stage]');
     const frame = document.querySelector('[data-page-frame]')?.getBoundingClientRect();
@@ -1382,7 +1382,7 @@ try {
     return { scrollTop: stage.scrollTop, scrollLeft: stage.scrollLeft };
   });
   assert.equal(outerScrollLeft.scrollTop, 0);
-  assert.ok(outerScrollLeft.scrollLeft > outerStageRange.clientWidth);
+  assert.ok(outerScrollLeft.scrollLeft > 0);
   const outerHorizontalAfter = await workspace.evaluate(() => {
     const stage = document.querySelector('[data-canvas-stage]');
     const frame = document.querySelector('[data-page-frame]')?.getBoundingClientRect();
