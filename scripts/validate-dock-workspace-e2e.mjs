@@ -2421,7 +2421,11 @@ try {
   assert.match(await transportTextRow.locator('small').textContent(), /文本 · #text/);
   assert.equal(await transportTextRow.locator('strong').textContent(), '文本 · 提升运输运行时长');
 
+  const transportSelectionResponse = new Promise((resolve) => {
+    resolveNextSelectionResponse = resolve;
+  });
   await transportRow.click();
+  assert.equal((await transportSelectionResponse).ok, true);
   await workspace.waitForFunction(
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
@@ -2464,7 +2468,11 @@ try {
   });
   assert.deepEqual(transportOverlayCoverage, { containsValue: true, containsIcon: true });
 
+  const transportTextSelectionResponse = new Promise((resolve) => {
+    resolveNextSelectionResponse = resolve;
+  });
   await transportTextRow.click();
+  assert.equal((await transportTextSelectionResponse).ok, true);
   assert.equal(
     await workspace.locator('textarea[data-text-editor]').inputValue(),
     '提升运输运行时长',
