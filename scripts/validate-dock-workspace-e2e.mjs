@@ -1181,6 +1181,7 @@ try {
   await workspace.waitForFunction(
     () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
   );
+  await workspace.locator('[data-task="layout"]').click();
   assert.equal(
     await workspace.locator('[data-guide-select-none]').getAttribute('aria-pressed'),
     'true',
