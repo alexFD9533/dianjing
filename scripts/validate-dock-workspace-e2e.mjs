@@ -1559,6 +1559,12 @@ try {
     fullPage: false,
   });
 
+  // Guide and canvas interactions can also produce a canvas background click;
+  // restore the fixture selection before checking the history panel handoff.
+  await refreshedFrameTitle.click();
+  await workspace.waitForFunction(
+    () => document.querySelector('[data-selection-count]')?.textContent === '已选择 1 个对象',
+  );
   await workspace.locator('[data-action="show-history"]').click();
   assert.ok((await workspace.locator('.history-item').count()) >= 5);
   assert.match(await workspace.locator('.history-list').textContent(), /修改文字/);
