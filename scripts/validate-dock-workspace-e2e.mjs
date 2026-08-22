@@ -1134,12 +1134,24 @@ try {
     const start =
       orientation === 'vertical'
         ? {
-            x: dropX,
+            x: clampToVisiblePage(
+              Math.max(rulerBox.x + 4, dropX),
+              rulerBox.x,
+              rulerBox.width,
+              viewportBox.x,
+              viewportBox.width,
+            ),
             y: clampToViewport(rulerBox.y + rulerBox.height / 2, viewportBox.y, viewportBox.height),
           }
         : {
             x: clampToViewport(rulerBox.x + rulerBox.width / 2, viewportBox.x, viewportBox.width),
-            y: dropY,
+            y: clampToVisiblePage(
+              Math.max(rulerBox.y + 4, dropY),
+              rulerBox.y,
+              rulerBox.height,
+              viewportBox.y,
+              viewportBox.height,
+            ),
           };
     const drop = { x: dropX, y: dropY };
     await workspace.mouse.move(start.x, start.y);
