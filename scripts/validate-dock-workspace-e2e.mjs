@@ -1442,6 +1442,18 @@ try {
     .locator('html')
     .evaluate(() => window.scrollTo(120, 120));
   await workspace.waitForTimeout(30);
+  const iframeScrollAfter = await workspace
+    .frameLocator('[data-page-frame]')
+    .locator('html')
+    .evaluate((html) => {
+      const frameWindow = html.ownerDocument.defaultView;
+      return {
+        scrollX: frameWindow?.scrollX ?? 0,
+        scrollY: frameWindow?.scrollY ?? 0,
+      };
+    });
+  assert.ok(iframeScrollAfter.scrollX > 0);
+  assert.ok(iframeScrollAfter.scrollY > 0);
   const iframeGuideAfter = await workspace.evaluate(() => {
     const frame = document.querySelector('[data-page-frame]')?.getBoundingClientRect();
     const vertical = document
@@ -1469,10 +1481,18 @@ try {
   assert.ok(Math.abs(iframeGuideAfter.horizontalLeft - iframeGuideAfter.frameLeft) < 2);
   assert.ok(Math.abs(iframeGuideAfter.horizontalWidth - iframeGuideAfter.frameWidth) < 2);
   assert.ok(
-    Math.abs(iframeGuideAfter.verticalLeft - iframeGuideBeforeScroll.verticalLeft + 120) < 2,
+    Math.abs(
+      iframeGuideAfter.verticalLeft -
+        iframeGuideBeforeScroll.verticalLeft +
+        iframeScrollAfter.scrollX,
+    ) < 2,
   );
   assert.ok(
-    Math.abs(iframeGuideAfter.horizontalTop - iframeGuideBeforeScroll.horizontalTop + 120) < 2,
+    Math.abs(
+      iframeGuideAfter.horizontalTop -
+        iframeGuideBeforeScroll.horizontalTop +
+        iframeScrollAfter.scrollY,
+    ) < 2,
   );
   await workspace
     .frameLocator('[data-page-frame]')
