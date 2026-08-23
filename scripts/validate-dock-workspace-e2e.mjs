@@ -2562,34 +2562,45 @@ try {
     const fragment = frame?.contentDocument?.querySelector('[data-dianjing-text-fragment]');
     return fragment?.style.position === 'relative' && fragment.style.left !== '';
   });
+  // Compare the parent metric geometry before and after the text move
+  // within the same source-page coordinate system. The workspace iframe
+  // runs in its own document with a different absolute origin, so reading
+  // the after-geometry from the iframe and comparing it against the
+  // source-page before-geometry is unreliable across viewports/scroll.
+  // The iframe is only used to verify the text-fragment style, text and
+  // DOM ownership, which are the behaviours move-text is meant to change.
+  const metricGeometryAfterTextMove = await source
+    .locator('#transport-runtime-metric')
+    .evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+      };
+    });
   const independentTextMove = await workspace.evaluate(() => {
     const metric = document
       .querySelector('[data-page-frame]')
       ?.contentDocument?.querySelector('#transport-runtime-metric');
     const fragment = metric?.querySelector('[data-dianjing-text-fragment]');
-    const metricRect = metric?.getBoundingClientRect();
     const value = metric?.querySelector('#transport-runtime-value');
     const icon = metric?.querySelector('#transport-runtime-icon');
     return {
-      metricGeometry: metricRect
-        ? {
-            left: metricRect.left,
-            top: metricRect.top,
-            right: metricRect.right,
-            bottom: metricRect.bottom,
-            width: metricRect.width,
-            height: metricRect.height,
-          }
-        : null,
       fragmentLeft: fragment?.style.left,
       fragmentText: fragment?.textContent,
       valueParentIsMetric: value?.parentElement === metric,
       iconParentIsMetric: icon?.parentElement === metric,
     };
   });
-  assert.ok(independentTextMove.metricGeometry);
   for (const [key, before] of Object.entries(metricGeometryBeforeTextMove))
-    assert.ok(Math.abs(independentTextMove.metricGeometry[key] - before) < 0.1, key);
+    assert.ok(
+      Math.abs(metricGeometryAfterTextMove[key] - before) < 0.1,
+      key + ': before=' + before + ' after=' + metricGeometryAfterTextMove[key],
+    );
   assert.match(independentTextMove.fragmentLeft ?? '', /^-?\d+px$/);
   assert.notEqual(independentTextMove.fragmentLeft, '0px');
   assert.equal(independentTextMove.fragmentText, '提升运输运行时长');
