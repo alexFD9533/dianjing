@@ -1,28 +1,29 @@
 # 公开范围清单
 
-## 首版公开
+## 当前公开主线
 
-- apps/dock-extension
-- packages/contracts
-- packages/selector-engine
-- 与正式扩展构建和回归直接相关的 scripts/validate-dock-*.mjs
-- 脱敏的示例页面和必要测试 fixtures
-- docs/open-source、根 README、许可证和社区文件
+- `apps/dock-extension`：正式 MV3 Dock、完整工作台、local preview 和公开运行入口；
+- `packages/contracts`、`packages/selector-engine`：正式扩展使用的共享协议/定位包；
+- 与正式扩展构建和回归直接相关的 `scripts/validate-dock-*.mjs`；
+- `docs/product/`、`docs/governance/`、`docs/open-source/`、根 README、许可证和社区文件；
+- 不含真实业务数据的测试 fixture、图标和必要构建资源。
 
-## 首版不作为正式运行入口
+## 公开仓库明确不承载的层
 
-- apps/extension：旧版插件
-- apps/demo-pages：历史原型和演示工程
-- apps/product-board：内部产品治理看板
-- .cairn、cairn、.local、.spec、.ui-design：项目过程、审查和本地产物
-- docs/design：设计过程图和未审查截图
-- debug.log 和其他日志
+- `apps/extension`：旧版插件；
+- `apps/demo-pages`：历史原型和演示工程；
+- `apps/product-board`：内部产品治理看板；
+- `cairn/`、`.local/`、`.spec/`、`.ui-design/`：项目过程、审查和本地产物；
+- `docs/archive/`、`docs/design/`：历史文档、设计过程图和未审查截图；
+- `third_party/clickdeck`：外部/历史参考实现；
+- `debug.log` 和其他日志。
 
-third_party/clickdeck 不属于首版公开基线；它只保留在开发工作区作为独立上游参考。若未来重新引入，必须同时保留其 MIT License 和版权声明。
+`.cairn/config.yaml` 是唯一纳入公开主线的项目治理配置，只包含名称、语言、Cairn 目录和毕业策略，不含知识正文或凭证。旧版、原型和内部资料如仍在开发者机器上，应通过本地归档分支/annotated tag 保留，不能被误当作发布代码。
 
-## 提交前必须确认
+## 提交和发布前确认
 
-- 公开代码和素材的版权归属已确认；
-- 没有客户数据、内部接口、真实业务截图或未授权字体/图标；
-- 当前工作区中的旧实现和过程目录没有被无意暂存；
-- 公开基线通过构建、测试、权限和依赖许可证检查。
+- 公开代码、图标、字体、示例和依赖的版权/许可证归属已确认；
+- 没有客户数据、内部接口、Token、真实业务截图或未脱敏素材；
+- 当前工作区中的旧实现、过程目录和生成物没有被暂存；
+- `pnpm verify:public`、权限/隐私审查、真实 Chromium 验收和发布 artifact 边界均有准确证据；
+- “CI 通过”与“用户已验收”分开记录，当前 Alpha 未发布。

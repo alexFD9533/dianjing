@@ -1,24 +1,28 @@
 # 贡献指南
 
-感谢你对点睛的兴趣。点睛目前处于 Alpha 阶段，贡献前请先确认你修改的是当前正式入口，而不是历史原型或旧版插件。
+感谢你对点睛的兴趣。点睛目前处于 Alpha 阶段，贡献前请先阅读根目录 [AGENTS.md](AGENTS.md) 和 [当前产品文档](docs/product/README.md)，确认修改的是正式入口，而不是历史原型或旧版插件。
 
 ## 当前开发入口
 
-- 正式扩展：apps/dock-extension
-- 共享协议与定位包：packages/contracts、packages/selector-engine
-- 构建后回归：scripts/validate-dock-*.mjs
-- 原型和旧版实现：仅供对照，除非 Issue 明确指向，否则不要修改
+- 正式扩展：`apps/dock-extension`
+- 共享协议与定位包：`packages/contracts`、`packages/selector-engine`
+- 构建后回归：`scripts/validate-dock-*.mjs`
+- 工程与权限边界：`docs/open-source/`
+- Git/发布规则：[docs/governance](docs/governance/repository-workflow.md)
+- 原型、旧版、第三方参考和内部过程：仅供本地对照，除非任务明确指向，否则不要修改或重新引入
+
+## 开始工作
+
+从最新 `origin/main` 创建干净分支和独立 worktree；不要在带有历史脏改动的工作区直接开发公开主线。进入仓库后依次读 `AGENTS.md`、根 README、`package.json`、`docs/README.md` 和目标模块 README。修改前保存 `git status --short --branch`，保留无关改动。
 
 ## 本地检查
 
 ```powershell
 pnpm install --frozen-lockfile
-pnpm typecheck
-pnpm test
-pnpm build:dock
+pnpm verify:public
 ```
 
-涉及真实浏览器行为时，还应安装 Chromium 并运行：
+`verify:public` 覆盖公开格式检查、lint、typecheck、unit、正式 Dock 构建、Dock E2E 和 Workspace E2E。涉及真实浏览器行为时，还应安装 Chromium 并单独确认：
 
 ```powershell
 pnpm exec playwright install chromium
@@ -26,18 +30,26 @@ pnpm test:dock:e2e
 pnpm test:dock:workspace
 ```
 
-## 提交要求
+构建、静态检查或 CI 通过不能自动写成“已验收”；需要真实扩展重载、DOM/几何/导出证据或用户确认的，在 PR 中标明未完成项。
 
-请让每个变更保持单一目的，并在 Pull Request 中说明：
+## 提交与 PR
 
-1. 用户问题和影响范围；
-2. 修改了哪个正式入口；
-3. 如何验证了真实 DOM 状态、几何变化或导出结果；
-4. 是否改变权限、隐私边界或公开文档；
-5. 已知限制和未完成的浏览器验收。
+每个分支保持单一目的。只选择性暂存明确文件，禁止 `git add .`、`git add -A`；不得提交 dist、截图、日志、`.cairn` 正文、`cairn`、`.local`、`.spec`、`.ui-design`、旧版/原型目录或真实业务数据。提交前运行：
 
-不要提交 dist、本地截图、日志、.cairn、cairn、.local、.spec、.ui-design 或真实业务数据。
+```powershell
+git diff --cached --check
+```
 
-## 行为准则
+Pull Request 使用 [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md)，说明：
 
-请以清晰、尊重和可复现为原则参与讨论。安全问题请按照 SECURITY.md 报告，不要先公开发布利用细节。
+1. 用户问题、影响范围和台账编号；
+2. 修改的正式入口，以及为什么没有同步历史层；
+3. 格式、lint、typecheck、unit、build、Dock/Workspace E2E 的逐项结果；
+4. 真实浏览器验收、权限/隐私边界和导出证据；
+5. 已知限制、未完成验收、文档和 CHANGELOG 是否同步。
+
+实质性优化的内部台账只在本地 `apps/product-board/src/data/changes.ts` 追加；除非用户明确要求整理台账到看板，不修改功能统计、版本快照或 `KB-*`。
+
+## 行为准则与安全
+
+请以清晰、尊重和可复现为原则参与讨论。安全问题请按照 SECURITY.md 报告，不要先公开发布利用细节。未经授权不要 push、打 tag、创建 Release 或修改 GitHub Settings。

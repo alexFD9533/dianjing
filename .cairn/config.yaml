@@ -1,0 +1,16 @@
+version: 0.1
+project:
+  name: '网页可视化工作台'
+  summary: '网页可视化工作台与点睛浏览器扩展项目'
+cairn:
+  knowledge_dir: 'cairn'
+  skill_spec_date: '2026-08-07'
+  git_policy: 'ignore'
+  language: 'zh'
+graduation:
+  provider: 'obsidian'
+  target: '9. AI工位/项目知识库'
+  index: '9. AI工位/项目知识库/INDEX.md'
+  link_format: 'wikilink'
+history:
+  migration_mode: 'start_fresh'
