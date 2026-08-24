@@ -9,4 +9,4 @@
 - [测试覆盖与发布门槛](tests.md)
 - [公开范围清单](public-scope.md)
 
-当前正式入口是 `apps/dock-extension`。旧版插件、原型、内部看板、Cairn 正文和第三方参考不属于公开运行路径；见 [公开范围清单](public-scope.md)。
+当前正式入口是 `apps/dock-extension`。旧版插件、原型、内部看板、本地过程资料和第三方参考不属于公开运行路径；见 [公开范围清单](public-scope.md)。
