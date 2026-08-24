@@ -12,9 +12,9 @@
 
 项目发布首个 Release 后，可从 [GitHub Releases](https://github.com/alexFD9533/dianjing/releases) 下载。
 
-## Release 发布后的安装方法
+## 拿到安装包后的安装方法
 
-1. 在 Releases 页面下载名称类似 `dianjing-v0.1.0-alpha.zip` 的文件；
+1. 从项目维护者或 Releases 页面取得名称类似 `dianjing-v0.1.0-alpha.zip` 的文件；
 2. 把 ZIP 完整解压到一个固定文件夹，不要直接从压缩包内打开；
 3. 在 Chrome 地址栏输入 `chrome://extensions`；
 4. 打开右上角“开发者模式”；
