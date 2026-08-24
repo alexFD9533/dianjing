@@ -56,7 +56,7 @@
 
 ## 如何反馈
 
-请在 [GitHub Issues](https://github.com/alexFD9533/dianjing/issues) 提交反馈。不会写代码也完全可以，只要尽量说明：
+公开的问题、建议和功能需求请在 [GitHub Issues](https://github.com/alexFD9533/dianjing/issues) 提交，方便其他试用者查看和补充。使用咨询、合作交流或不适合公开讨论的内容，也可以发送邮件至 [280845201@qq.com](mailto:280845201@qq.com)。不会写代码也完全可以，只要尽量说明：
 
 1. 你当时想完成什么；
 2. 使用的是本地 HTML、localhost，还是普通网页副本；

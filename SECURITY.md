@@ -2,7 +2,7 @@
 
 ## 报告安全问题
 
-请不要在公开 Issue 中提交密钥、真实页面内容、个人数据或可直接利用的安全细节。当前项目尚未配置专用安全邮箱；在正式公开仓库后，请优先使用 GitHub 的 Private Vulnerability Reporting，或联系仓库维护者获取私下报告渠道。
+请不要在公开 Issue 中提交密钥、真实页面内容、个人数据或可直接利用的安全细节。请优先使用 GitHub 的 Private Vulnerability Reporting；如果该入口不可用，可以发送邮件至 [280845201@qq.com](mailto:280845201@qq.com)，并在主题中注明“点睛安全问题”。
 
 报告中请尽量包含：
 

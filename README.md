@@ -8,7 +8,7 @@ AI 已经把网页、原型或 HTML 演示做出来了，最后几个字、颜�
 
 **一句话理解：不是画龙，是点睛。页面已经有了，用点睛完成交付前的最后一轮精修。**
 
-[看看它怎么工作](#先看它怎么工作) · [安装并开始使用](#安装并开始使用) · [查看试用指南](docs/product/user-guide.md) · [反馈问题](https://github.com/alexFD9533/dianjing/issues)
+[看看它怎么工作](#先看它怎么工作) · [安装并开始使用](#安装并开始使用) · [查看试用指南](docs/product/user-guide.md) · [联系与反馈](#联系与反馈)
 
 ## 为什么需要点睛
 
@@ -194,7 +194,13 @@ docs/open-source/          面向审查者和贡献者的工程说明
 
 请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)、[仓库工作流](docs/governance/repository-workflow.md) 和 [发布清单](docs/governance/release-checklist.md)。正式公开改动必须从最新 `origin/main` 的干净分支开始，选择性暂存，禁止 `git add .`。安全问题请不要公开提交到 Issue，见 SECURITY.md。当前仍处于 Alpha 阶段，产品边界和数据模型可能继续调整。
 
-如果你只是试用产品，不需要先学会提交代码：可以直接通过 [GitHub Issues](https://github.com/alexFD9533/dianjing/issues) 报告问题或提出建议。请说明使用场景、复现步骤和浏览器版本；截图或示例 HTML 请先移除账号、客户数据、内部地址和其他私人信息。
+## 联系与反馈
+
+- 公开的问题、建议和功能需求：请提交 [GitHub Issue](https://github.com/alexFD9533/dianjing/issues)，方便其他试用者查看和补充；
+- 使用咨询、合作交流或不适合公开讨论的内容：发送邮件至 [280845201@qq.com](mailto:280845201@qq.com)；
+- 安全漏洞：请按照 [SECURITY.md](SECURITY.md) 私下报告，不要先在公开 Issue 中披露可利用细节。
+
+反馈时请尽量说明使用场景、复现步骤、浏览器和点睛版本。截图或示例 HTML 请先移除账号、Token、客户数据、内部地址和其他私人信息。发送邮件时建议在主题中加上“点睛”，便于识别。
 
 本项目使用 Apache-2.0 许可证。项目名称、图标和品牌素材不因代码许可证自动获得商标授权。
 
