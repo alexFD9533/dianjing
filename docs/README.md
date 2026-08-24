@@ -23,6 +23,6 @@
 
 旧版插件、历史原型、旧产品定义和设计过程资料只在本地归档或历史提交中保留。公开 `main` 不包含 `apps/extension`、`apps/demo-pages`、`third_party` 或 `docs/archive`，也不承诺这些资料与当前产品同步。
 
-## internal：内部治理
+## 本地边界
 
-本地 `cairn/` 保存项目路线图、日志和稳定专题，`.cairn/config.yaml` 保存可移植配置，`apps/product-board/src/data/changes.ts` 保存优化台账。它们不属于公开产品入口；跨项目结论须经用户确认后才毕业到 Obsidian。
+本地过程、审查材料、优化台账和历史资产不属于公开产品入口；公开文档只描述当前产品、工程边界、贡献流程和发布要求。

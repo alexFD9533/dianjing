@@ -10,9 +10,8 @@ test-results/
 *.log
 .DS_Store
 
-# Local review and project-memory material
-.cairn/*
-!.cairn/config.yaml
+# Local review and internal process material
+.cairn/
 .local/
 .spec/
 .ui-design/
@@ -40,5 +39,5 @@ packages/selector-engine/*.tsbuildinfo
 docs/*.md
 !docs/README.md
 
-# Project Cairn: git_policy=ignore
+# Local process directory
 cairn/

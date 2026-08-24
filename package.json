@@ -9,7 +9,7 @@
     "build:dock": "pnpm --filter @workbench/dock-extension build",
     "lint": "eslint . --max-warnings=0",
     "format:check": "prettier --check .",
-    "format:check:public": "prettier --check --ignore-unknown README.md docs/README.md CONTRIBUTING.md CHANGELOG.md AGENTS.md CLAUDE.md docs/product docs/governance docs/open-source .github/PULL_REQUEST_TEMPLATE.md .github/workflows/ci.yml .github/workflows/release-artifact.yml package.json .cairn/config.yaml",
+    "format:check:public": "prettier --check --ignore-unknown README.md docs/README.md CONTRIBUTING.md CHANGELOG.md docs/product docs/governance docs/open-source .github/PULL_REQUEST_TEMPLATE.md .github/workflows/ci.yml .github/workflows/release-artifact.yml package.json",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:dock:e2e": "node scripts/validate-dock-e2e.mjs",

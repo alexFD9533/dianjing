@@ -13,12 +13,12 @@
 - `apps/extension`：旧版插件；
 - `apps/demo-pages`：历史原型和演示工程；
 - `apps/product-board`：内部产品治理看板；
-- `cairn/`、`.local/`、`.spec/`、`.ui-design/`：项目过程、审查和本地产物；
+- `.local/`、`.spec/`、`.ui-design/`：项目过程、审查和本地产物；
 - `docs/archive/`、`docs/design/`：历史文档、设计过程图和未审查截图；
 - `third_party/clickdeck`：外部/历史参考实现；
 - `debug.log` 和其他日志。
 
-`.cairn/config.yaml` 是唯一纳入公开主线的项目治理配置，只包含名称、语言、Cairn 目录和毕业策略，不含知识正文或凭证。旧版、原型和内部资料如仍在开发者机器上，应通过本地归档分支/annotated tag 保留，不能被误当作发布代码。
+公开仓库不收录本地过程、内部台账、缓存或历史资产；开发者机器上的这些资料应与公开仓库分开保存，不作为发布代码。旧版、原型和内部资料如仍需保留，应通过本地归档分支或 annotated tag 保存，不能被误当作发布代码。
 
 ## 提交和发布前确认
 

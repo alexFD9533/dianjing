@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢你对点睛的兴趣。点睛目前处于 Alpha 阶段，贡献前请先阅读根目录 [AGENTS.md](AGENTS.md) 和 [当前产品文档](docs/product/README.md)，确认修改的是正式入口，而不是历史原型或旧版插件。
+感谢你对点睛的兴趣。点睛目前处于 Alpha 阶段，贡献前请先阅读 [当前产品文档](docs/product/README.md) 和 [仓库工作流](docs/governance/repository-workflow.md)，确认修改的是正式入口，而不是历史原型或旧版插件。
 
 ## 当前开发入口
 
@@ -13,7 +13,7 @@
 
 ## 开始工作
 
-从最新 `origin/main` 创建干净分支和独立 worktree；不要在带有历史脏改动的工作区直接开发公开主线。进入仓库后依次读 `AGENTS.md`、根 README、`package.json`、`docs/README.md` 和目标模块 README。修改前保存 `git status --short --branch`，保留无关改动。
+从最新 `origin/main` 创建干净分支和独立 worktree；不要在带有历史脏改动的工作区直接开发公开主线。进入仓库后依次读根 README、`package.json`、`docs/README.md` 和目标模块 README。修改前保存 `git status --short --branch`，保留无关改动。
 
 ## 本地检查
 
@@ -34,7 +34,7 @@ pnpm test:dock:workspace
 
 ## 提交与 PR
 
-每个分支保持单一目的。只选择性暂存明确文件，禁止 `git add .`、`git add -A`；不得提交 dist、截图、日志、`.cairn` 正文、`cairn`、`.local`、`.spec`、`.ui-design`、旧版/原型目录或真实业务数据。提交前运行：
+每个分支保持单一目的。只选择性暂存明确文件，禁止 `git add .`、`git add -A`；不得提交 dist、截图、日志、内部过程目录、旧版/原型目录或真实业务数据。提交前运行：
 
 ```powershell
 git diff --cached --check
@@ -47,8 +47,6 @@ Pull Request 使用 [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMP
 3. 格式、lint、typecheck、unit、build、Dock/Workspace E2E 的逐项结果；
 4. 真实浏览器验收、权限/隐私边界和导出证据；
 5. 已知限制、未完成验收、文档和 CHANGELOG 是否同步。
-
-实质性优化的内部台账只在本地 `apps/product-board/src/data/changes.ts` 追加；除非用户明确要求整理台账到看板，不修改功能统计、版本快照或 `KB-*`。
 
 ## 行为准则与安全
 

@@ -14,7 +14,7 @@
 | governance  | [docs/governance](docs/governance/repository-workflow.md)                                              | 分支、选择性提交、PR、台账和发布流程                   |
 | engineering | [docs/open-source](docs/open-source/README.md)                                                         | 架构、信任边界、流程、权限、变量和测试证据             |
 | archive     | 本地归档分支/历史目录                                                                                  | 旧版插件、原型和历史文档，仅用于追溯，不是公开运行入口 |
-| internal    | 本地 `cairn/`、`.cairn/`、`apps/product-board/`                                                        | 项目过程、路线图、优化台账和内部治理，不进入公开主线   |
+| internal    | 本地内部记录与历史资料                                                                                | 项目过程、路线图、优化台账和历史资产，不进入公开主线   |
 
 当前公开开发目标是新版 MV3 扩展：
 
@@ -79,10 +79,10 @@ docs/open-source/          面向审查者和贡献者的工程说明
 
 ## 参与贡献
 
-请先阅读 [AGENTS.md](AGENTS.md)、[CONTRIBUTING.md](CONTRIBUTING.md) 和 [发布清单](docs/governance/release-checklist.md)。正式公开改动必须从最新 `origin/main` 的干净分支开始，选择性暂存，禁止 `git add .`。安全问题请不要公开提交到 Issue，见 SECURITY.md。当前仍处于 Alpha 阶段，产品边界和数据模型可能继续调整。
+请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)、[仓库工作流](docs/governance/repository-workflow.md) 和 [发布清单](docs/governance/release-checklist.md)。正式公开改动必须从最新 `origin/main` 的干净分支开始，选择性暂存，禁止 `git add .`。安全问题请不要公开提交到 Issue，见 SECURITY.md。当前仍处于 Alpha 阶段，产品边界和数据模型可能继续调整。
 
 本项目使用 Apache-2.0 许可证。项目名称、图标和品牌素材不因代码许可证自动获得商标授权。
 
 ## 历史与内部资料
 
-公开 `main` 不重新引入 `apps/extension`、`apps/demo-pages`、`third_party`、`docs/archive`、`apps/product-board` 或 Cairn 正文。它们若存在于开发者机器，只能作为本地历史/内部治理层保留；删除前应先完成可恢复归档。当前 Alpha 尚未发布。
+公开 `main` 不重新引入 `apps/extension`、`apps/demo-pages`、`third_party`、`docs/archive`、`apps/product-board` 或本地过程资料。它们若存在于开发者机器，只能作为本地历史/内部记录保留；删除前应先完成可恢复归档。当前 Alpha 尚未发布。

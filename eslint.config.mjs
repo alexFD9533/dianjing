@@ -14,7 +14,6 @@ export default [
       '**/coverage/**',
       '**/playwright-report/**',
       '**/test-results/**',
-      '**/.cairn/**',
       '**/.local/**',
       '**/.spec/**',
       '**/.ui-design/**',
