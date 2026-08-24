@@ -8,7 +8,7 @@ AI 已经把网页做出来了，最后几个字、颜色、间距和布局却�
 
 **一句话理解：页面已经有了，用点睛完成交付前的最后一轮精修。**
 
-[看看它怎么工作](#先看它怎么工作) · [完成 5 分钟体验](#5-分钟体验) · [查看试用指南](docs/user-guide.md) · [反馈问题](https://github.com/alexFD9533/dianjing/issues)
+[看看它怎么工作](#先看它怎么工作) · [完成 5 分钟体验](#5-分钟体验) · [查看试用指南](docs/product/user-guide.md) · [反馈问题](https://github.com/alexFD9533/dianjing/issues)
 
 ## 为什么需要点睛
 
@@ -59,7 +59,7 @@ AI 已经把网页做出来了，最后几个字、颜色、间距和布局却�
 4. 撤销刚才的修改，再重新应用；
 5. 导出一张整页 PNG，或把修改结果导出为离线 HTML。
 
-完成这条路径后，你就能判断点睛是否适合自己的 AI 页面修改和交付流程。普通试用者的安装步骤、第一次操作和反馈模板见 [点睛试用指南](docs/user-guide.md)。
+完成这条路径后，你就能判断点睛是否适合自己的 AI 页面修改和交付流程。普通试用者的安装步骤、第一次操作和反馈模板见 [点睛试用指南](docs/product/user-guide.md)。
 
 ## 文档导航
 
@@ -83,7 +83,7 @@ AI 已经把网页做出来了，最后几个字、颜色、间距和布局却�
 
 **当前要先说明一个限制：GitHub 仓库链接不是安装包。** 源代码已经公开，但首个 Alpha Release 尚未发布，也还没有上架 Chrome 扩展商店。不会构建源码的同事目前应等待首个 Release，或由项目维护者提供经过验证的扩展包。
 
-首个 Release 发布后，普通试用者可以从 [Releases 页面](https://github.com/alexFD9533/dianjing/releases) 下载 ZIP，解压后在 Chrome 扩展管理页选择“加载已解压的扩展”。完整步骤见 [点睛试用指南](docs/user-guide.md)。
+首个 Release 发布后，普通试用者可以从 [Releases 页面](https://github.com/alexFD9533/dianjing/releases) 下载 ZIP，解压后在 Chrome 扩展管理页选择“加载已解压的扩展”。完整步骤见 [点睛试用指南](docs/product/user-guide.md)。
 
 ### 开发者从源码构建
 
