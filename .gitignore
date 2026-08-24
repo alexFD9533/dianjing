@@ -11,7 +11,8 @@ test-results/
 .DS_Store
 
 # Local review and project-memory material
-.cairn/
+.cairn/*
+!.cairn/config.yaml
 .local/
 .spec/
 .ui-design/
@@ -28,6 +29,12 @@ packages/*
 !packages/contracts/**
 !packages/selector-engine/
 !packages/selector-engine/**
+packages/contracts/dist/
+packages/contracts/node_modules/
+packages/contracts/*.tsbuildinfo
+packages/selector-engine/dist/
+packages/selector-engine/node_modules/
+packages/selector-engine/*.tsbuildinfo
 
 # Root-level historical product notes remain outside the public baseline
 docs/*.md

@@ -4,7 +4,8 @@ dist-types/
 coverage/
 playwright-report/
 test-results/
-.cairn/
+.cairn/*
+!.cairn/config.yaml
 .local/
 .spec/
 .ui-design/

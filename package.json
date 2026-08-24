@@ -9,11 +9,12 @@
     "build:dock": "pnpm --filter @workbench/dock-extension build",
     "lint": "eslint . --max-warnings=0",
     "format:check": "prettier --check .",
-    "format:check:public": "prettier --check --ignore-unknown README.md docs/README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md NOTICE docs/open-source .github eslint.config.mjs package.json",
+    "format:check:public": "prettier --check --ignore-unknown README.md docs/README.md CONTRIBUTING.md CHANGELOG.md AGENTS.md CLAUDE.md docs/product docs/governance docs/open-source .github/PULL_REQUEST_TEMPLATE.md .github/workflows/ci.yml .github/workflows/release-artifact.yml package.json .cairn/config.yaml",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:dock:e2e": "node scripts/validate-dock-e2e.mjs",
     "test:dock:workspace": "node scripts/validate-dock-workspace-e2e.mjs",
+    "verify:public": "pnpm format:check:public && pnpm lint && pnpm typecheck && pnpm test && pnpm build:dock && pnpm test:dock:e2e && pnpm test:dock:workspace",
     "build": "pnpm --filter @workbench/contracts build && pnpm --filter @workbench/selector-engine build && pnpm --filter @workbench/dock-extension build"
   },
   "devDependencies": {

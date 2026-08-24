@@ -1,13 +1,28 @@
-# 点睛产品文档
+# 点睛文档导航
 
-**品牌主张：** AI 创作的最后一笔。
+当前正式产品是 `apps/dock-extension`，产品名为“点睛”，品牌主张为“AI 创作的最后一笔”。文档按用途分层，不能把历史原型或内部过程资料当成当前规格。
 
-**产品品类：** AI 创作的最后一公里工作台
+## current：当前产品
 
-**核心能力：** 应手编辑——让非开发创作者像使用 Axure、PPT 一样直接调整 HTML。
+- [产品文档入口](product/README.md)
+- [产品定义](product/product-definition.md)
+- [品牌规则](product/brand.md)
+- [Alpha 发布范围](product/alpha-release.md)
+- [正式扩展说明](../apps/dock-extension/README.md)
 
-当前正式运行目标是 apps/dock-extension。公开工程说明、权限边界和测试证据见 docs/open-source。下列中文产品文档中部分文件名和历史内容仍使用“成章”或“页面重构工作台”，仅作为设计与演进记录保留。
+## governance：仓库治理
 
-当前公开工程文档以 [开源工程说明](open-source/README.md) 为准，其中包括架构、关键流程、权限、数据边界、测试和公开范围。
+- [仓库工作流](governance/repository-workflow.md)
+- [发布检查清单](governance/release-checklist.md)
 
-“点睛”是当前正式产品名；“成章”是历史品牌名，“页面重构工作台”是文档中的产品品类和历史文件命名，不再作为对外品牌名。其余中文产品方案、PRD、旧交互说明、旧功能清单和旧实施材料不属于当前公开基线。
+## engineering：工程审查
+
+- [开源工程说明](open-source/README.md)：架构、信任边界、关键流程、权限、配置/变量、测试映射和公开范围。
+
+## archive：历史资料
+
+旧版插件、历史原型、旧产品定义和设计过程资料只在本地归档或历史提交中保留。公开 `main` 不包含 `apps/extension`、`apps/demo-pages`、`third_party` 或 `docs/archive`，也不承诺这些资料与当前产品同步。
+
+## internal：内部治理
+
+本地 `cairn/` 保存项目路线图、日志和稳定专题，`.cairn/config.yaml` 保存可移植配置，`apps/product-board/src/data/changes.ts` 保存优化台账。它们不属于公开产品入口；跨项目结论须经用户确认后才毕业到 Obsidian。
