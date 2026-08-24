@@ -4,6 +4,7 @@
 
 ## current：当前产品
 
+- [试用指南](product/user-guide.md)：普通试用者的安装、5 分钟体验、反馈方式和常见问题。
 - [产品文档入口](product/README.md)
 - [产品定义](product/product-definition.md)
 - [品牌规则](product/brand.md)

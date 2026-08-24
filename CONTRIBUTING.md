@@ -34,7 +34,7 @@ pnpm test:dock:workspace
 
 ## 提交与 PR
 
-每个分支保持单一目的。只选择性暂存明确文件，禁止 `git add .`、`git add -A`；不得提交 dist、截图、日志、内部过程目录、旧版/原型目录或真实业务数据。提交前运行：
+每个分支保持单一目的。只选择性暂存明确文件，禁止 `git add .`、`git add -A`；不得提交 dist、测试过程中的临时截图、日志、内部过程目录、旧版/原型目录或真实业务数据。经过脱敏和内容审查、明确用于 README 或公开文档的正式配图可以提交。提交前运行：
 
 ```powershell
 git diff --cached --check
